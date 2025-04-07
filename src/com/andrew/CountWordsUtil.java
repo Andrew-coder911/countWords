@@ -1,5 +1,7 @@
 package com.andrew;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -11,9 +13,9 @@ public final class CountWordsUtil {
 
     private static char[] convertToCharArray(Path path) throws IOException {
         StringBuilder result = new StringBuilder();
-        List<String> strings = Files.readAllLines(path);
-        for (String string : strings) {
-            result.append(string.toLowerCase().replace(" ", ""));
+        try (BufferedReader reader = new BufferedReader(new FileReader(path.toFile()))) {
+            while (reader.readLine() != null)
+            result.append(reader.readLine());
         }
         return result.toString().toCharArray();
     }
